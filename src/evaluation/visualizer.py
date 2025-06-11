@@ -7,7 +7,6 @@ from collections import Counter
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 import seaborn as sns
 
 
@@ -155,7 +154,7 @@ class EvaluationVisualizer:
 
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches="tight")
-            print(f"📊 Class performance saved to: {save_path}")
+            print(f"Class performance saved to: {save_path}")
 
         plt.show()
 
@@ -191,7 +190,7 @@ class EvaluationVisualizer:
 
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches="tight")
-            print(f"📊 Label distribution saved to: {save_path}")
+            print(f"Label distribution saved to: {save_path}")
 
         plt.show()
 
@@ -201,11 +200,11 @@ class EvaluationVisualizer:
 
         os.makedirs(save_dir, exist_ok=True)
 
-        print("📊 Creating evaluation visualizations...")
+        print("Creating evaluation visualizations...")
 
         self.plot_confusion_matrix(f"{save_dir}/confusion_matrix.png")
         self.plot_confidence_distribution(f"{save_dir}/confidence_distribution.png")
         self.plot_class_performance(f"{save_dir}/class_performance.png")
         self.plot_label_distribution(f"{save_dir}/label_distribution.png")
 
-        print(f"✅ All visualizations saved to: {save_dir}/")
+        print(f"All visualizations saved to: {save_dir}/")
