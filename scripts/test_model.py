@@ -4,45 +4,47 @@ Generic model testing script that works with any trained model
 Usage: python test_model.py [--model MODEL_PATH] [--data TEST_FILE] [--visualize]
 """
 
-import sys
-import os
 import argparse
+import os
+import sys
 
 # Add src to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.evaluation.evaluator import ModelEvaluator
 from src.evaluation.visualizer import EvaluationVisualizer
 
 # Import the intent classifier (works with any model saved in the standard format)
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from intent_classifier import IntentClassifier
 
 
 def detect_model_type(model_path):
     """Detect if this is a BERT model or traditional model"""
-    tokenizer_dir = os.path.join(model_path, 'tokenizer')
-    vocab_file = os.path.join(model_path, 'vocab.pkl')
+    tokenizer_dir = os.path.join(model_path, "tokenizer")
+    vocab_file = os.path.join(model_path, "vocab.pkl")
 
     if os.path.exists(tokenizer_dir):
-        return 'bert'
+        return "bert"
     elif os.path.exists(vocab_file):
-        return 'traditional'
+        return "traditional"
     else:
-        return 'unknown'
+        return "unknown"
 
 
 def load_bert_model(model_path):
     """Load BERT model with special handling"""
-    import torch
     import pickle
+
+    import torch
     from transformers import DistilBertTokenizer
+
     from src.models.bert_model import BERTClassifier
 
     # Load components
-    model_file = os.path.join(model_path, 'model.pt')
-    tokenizer_dir = os.path.join(model_path, 'tokenizer')
-    label_encoder_file = os.path.join(model_path, 'label_encoder.pkl')
+    model_file = os.path.join(model_path, "model.pt")
+    tokenizer_dir = os.path.join(model_path, "tokenizer")
+    label_encoder_file = os.path.join(model_path, "label_encoder.pkl")
 
     # Load tokenizer
     tokenizer = DistilBertTokenizer.from_pretrained(tokenizer_dir)
@@ -65,35 +67,49 @@ def load_bert_model(model_path):
     bert_vocab = BERTVocab(tokenizer)
 
     # Load label encoder
-    with open(label_encoder_file, 'rb') as f:
+    with open(label_encoder_file, "rb") as f:
         label_encoder = pickle.load(f)
 
     # Create model
     model = BERTClassifier(
         vocab_size=len(bert_vocab),
         num_classes=len(label_encoder.classes_),
-        model_name='distilbert-base-uncased'
+        model_name="distilbert-base-uncased",
     )
 
     # Load state dict
-    model.load_state_dict(torch.load(model_file, map_location='cpu'))
+    model.load_state_dict(torch.load(model_file, map_location="cpu"))
     model.eval()
 
     return model, bert_vocab, label_encoder
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Test trained intent classification model')
-    parser.add_argument('--model', type=str, default='../output_models/lstm_model',
-                        help='Path to model directory (default: ../output_models/lstm_model)')
-    parser.add_argument('--data', type=str, default='../data/atis/test.tsv',
-                        help='Path to test data file (default: ../data/atis/test.tsv)')
-    parser.add_argument('--output', type=str, default=None,
-                        help='Output file for results (default: auto-generated based on model name)')
-    parser.add_argument('--visualize', action='store_true',
-                        help='Create visualization plots')
-    parser.add_argument('--quiet', action='store_true',
-                        help='Suppress verbose output')
+    parser = argparse.ArgumentParser(
+        description="Test trained intent classification model"
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="../output_models/lstm_model",
+        help="Path to model directory (default: ../output_models/lstm_model)",
+    )
+    parser.add_argument(
+        "--data",
+        type=str,
+        default="../data/atis/test.tsv",
+        help="Path to test data file (default: ../data/atis/test.tsv)",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default=None,
+        help="Output file for results (default: auto-generated based on model name)",
+    )
+    parser.add_argument(
+        "--visualize", action="store_true", help="Create visualization plots"
+    )
+    parser.add_argument("--quiet", action="store_true", help="Suppress verbose output")
 
     args = parser.parse_args()
 
@@ -103,29 +119,31 @@ def main():
 
     # Handle relative paths by making them relative to project root
     if not os.path.isabs(args.model):
-        if args.model.startswith('../'):
+        if args.model.startswith("../"):
             args.model = os.path.join(project_root, args.model[3:])
         else:
             args.model = os.path.join(project_root, args.model)
 
     if not os.path.isabs(args.data):
-        if args.data.startswith('../'):
+        if args.data.startswith("../"):
             args.data = os.path.join(project_root, args.data[3:])
         else:
             args.data = os.path.join(project_root, args.data)
 
     # Extract model name from path for organized output
-    model_name = os.path.basename(args.model.rstrip('/'))
+    model_name = os.path.basename(args.model.rstrip("/"))
 
     # Create organized output directory structure
-    results_dir = os.path.join(project_root, "evaluation_results", f"{model_name}_results")
+    results_dir = os.path.join(
+        project_root, "evaluation_results", f"{model_name}_results"
+    )
     os.makedirs(results_dir, exist_ok=True)
 
     # Set output file if not specified
     if args.output is None:
         args.output = os.path.join(results_dir, "evaluation_report.txt")
     elif not os.path.isabs(args.output):
-        if args.output.startswith('../'):
+        if args.output.startswith("../"):
             args.output = os.path.join(project_root, args.output[3:])
         else:
             args.output = os.path.join(project_root, args.output)
@@ -141,7 +159,7 @@ def main():
     print(f"🔍 Detected model type: {model_type}")
 
     try:
-        if model_type == 'bert':
+        if model_type == "bert":
             print("🤖 Loading BERT model...")
             model, vocab, label_encoder = load_bert_model(args.model)
 
@@ -153,8 +171,9 @@ def main():
                     self.label_encoder = label_encoder
 
                 def predict(self, text):
-                    from src.data.preprocessing import text_to_bert_indices
                     import torch
+
+                    from src.data.preprocessing import text_to_bert_indices
 
                     # Tokenize text
                     indices = text_to_bert_indices(text, self.vocab, max_len=128)
@@ -171,10 +190,7 @@ def main():
                     results = []
                     for prob, idx in zip(top_probs[0], top_indices[0]):
                         label = self.label_encoder.classes_[idx.item()]
-                        results.append({
-                            'label': label,
-                            'confidence': prob.item()
-                        })
+                        results.append({"label": label, "confidence": prob.item()})
 
                     return results
 
@@ -191,6 +207,7 @@ def main():
     except Exception as e:
         print(f"❌ Error loading model: {e}")
         import traceback
+
         traceback.print_exc()
         return 1
 
@@ -220,9 +237,9 @@ def main():
                 print(f"⚠️  Visualization error: {e}")
 
         # Final summary
-        accuracy = results['basic_metrics']['accuracy']
-        misclassified_count = len(results['misclassified_examples'])
-        total_samples = results['basic_metrics']['total_samples']
+        accuracy = results["basic_metrics"]["accuracy"]
+        misclassified_count = len(results["misclassified_examples"])
+        total_samples = results["basic_metrics"]["total_samples"]
 
         print(f"\n🎉 Final Test Accuracy: {accuracy:.4f} ({accuracy * 100:.2f}%)")
         print(f"📁 All results saved to: {results_dir}")
@@ -232,15 +249,19 @@ def main():
 
         # Create a quick summary file as well
         summary_file = os.path.join(results_dir, "quick_summary.txt")
-        with open(summary_file, 'w') as f:
+        with open(summary_file, "w") as f:
             f.write(f"Model Evaluation Summary\n")
             f.write(f"{'=' * 30}\n\n")
             f.write(f"Model: {model_name}\n")
             f.write(f"Model Type: {model_type}\n")
             f.write(f"Test Accuracy: {accuracy:.4f} ({accuracy * 100:.2f}%)\n")
-            f.write(f"Correct Predictions: {total_samples - misclassified_count}/{total_samples}\n")
+            f.write(
+                f"Correct Predictions: {total_samples - misclassified_count}/{total_samples}\n"
+            )
             f.write(f"Misclassified: {misclassified_count}\n")
-            f.write(f"Average Confidence: {results['basic_metrics']['avg_confidence']:.4f}\n\n")
+            f.write(
+                f"Average Confidence: {results['basic_metrics']['avg_confidence']:.4f}\n\n"
+            )
             f.write(f"Files generated:\n")
             f.write(f"- evaluation_report.txt (detailed results)\n")
             f.write(f"- quick_summary.txt (this file)\n")
@@ -254,9 +275,10 @@ def main():
     except Exception as e:
         print(f"❌ Error during evaluation: {e}")
         import traceback
+
         traceback.print_exc()
         return 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     exit(main())

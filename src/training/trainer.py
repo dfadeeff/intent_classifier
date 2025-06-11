@@ -6,6 +6,7 @@ Generic trainer for text classification models
 import torch
 import torch.nn as nn
 import torch.optim as optim
+
 from .utils import save_model_components
 
 
@@ -14,7 +15,9 @@ class TextClassifierTrainer:
 
     def __init__(self, model, device=None, learning_rate=0.001):
         self.model = model
-        self.device = device or torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = device or torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
         self.model.to(self.device)
 
         self.criterion = nn.CrossEntropyLoss()
@@ -32,9 +35,9 @@ class TextClassifierTrainer:
         for batch in train_loader:
             self.optimizer.zero_grad()
 
-            input_ids = batch['input_ids'].to(self.device)
-            labels = batch['labels'].to(self.device)
-            lengths = batch['lengths']
+            input_ids = batch["input_ids"].to(self.device)
+            labels = batch["labels"].to(self.device)
+            lengths = batch["lengths"]
 
             logits = self.model(input_ids, lengths)
             loss = self.criterion(logits, labels)
@@ -56,9 +59,9 @@ class TextClassifierTrainer:
 
         with torch.no_grad():
             for batch in val_loader:
-                input_ids = batch['input_ids'].to(self.device)
-                labels = batch['labels'].to(self.device)
-                lengths = batch['lengths']
+                input_ids = batch["input_ids"].to(self.device)
+                labels = batch["labels"].to(self.device)
+                lengths = batch["lengths"]
 
                 logits = self.model(input_ids, lengths)
                 _, predicted = torch.max(logits, 1)
@@ -88,10 +91,12 @@ class TextClassifierTrainer:
             val_accuracy = self.evaluate(val_loader)
 
             if verbose:
-                print(f"Epoch {epoch + 1}/{num_epochs}: "
-                      f"Loss={train_loss:.4f}, "
-                      f"Acc={val_accuracy:.4f}, "
-                      f"Best={self.best_accuracy:.4f}")
+                print(
+                    f"Epoch {epoch + 1}/{num_epochs}: "
+                    f"Loss={train_loss:.4f}, "
+                    f"Acc={val_accuracy:.4f}, "
+                    f"Best={self.best_accuracy:.4f}"
+                )
 
         return self.best_accuracy
 

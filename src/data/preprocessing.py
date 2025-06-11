@@ -10,8 +10,8 @@ from collections import Counter
 def clean_text(text):
     """Clean text same way as training"""
     text = text.lower()
-    text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
-    return ' '.join(text.split())
+    text = re.sub(r"[^a-zA-Z0-9\s]", "", text)
+    return " ".join(text.split())
 
 
 def build_vocab(texts, min_freq=2):
@@ -22,7 +22,7 @@ def build_vocab(texts, min_freq=2):
         words.extend(clean_text_result.split())
 
     word_counts = Counter(words)
-    vocab = {'<PAD>': 0, '<UNK>': 1}
+    vocab = {"<PAD>": 0, "<UNK>": 1}
 
     for word, count in word_counts.items():
         if count >= min_freq:
@@ -34,13 +34,13 @@ def build_vocab(texts, min_freq=2):
 def text_to_indices(text, vocab, max_len=50):
     """Convert text to indices using vocabulary"""
     words = clean_text(text).split()
-    indices = [vocab.get(word, vocab['<UNK>']) for word in words]
+    indices = [vocab.get(word, vocab["<UNK>"]) for word in words]
     if len(indices) > max_len:
         indices = indices[:max_len]
     return indices
 
 
-def build_bert_vocab(texts, model_name='distilbert-base-uncased'):
+def build_bert_vocab(texts, model_name="distilbert-base-uncased"):
     """
     For BERT, we don't build a vocab from texts, but we return a tokenizer
     that acts like a vocab for consistency with the existing interface
@@ -80,10 +80,10 @@ def text_to_bert_indices(text, vocab, max_len=128):
         text,
         add_special_tokens=True,
         max_length=max_len,
-        padding='max_length',
+        padding="max_length",
         truncation=True,
-        return_tensors='pt'
+        return_tensors="pt",
     )
 
     # Return as list to match the interface of text_to_indices
-    return encoding['input_ids'].flatten().tolist()
+    return encoding["input_ids"].flatten().tolist()

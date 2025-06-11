@@ -5,14 +5,23 @@ LSTM model for text classification
 
 import torch
 import torch.nn as nn
+
 from .base_model import BaseTextClassifier
 
 
 class LSTMClassifier(BaseTextClassifier):
     """LSTM-based text classifier with attention"""
 
-    def __init__(self, vocab_size, num_classes, embedding_dim=128, hidden_dim=256,
-                 num_layers=2, dropout=0.3, bidirectional=True):
+    def __init__(
+        self,
+        vocab_size,
+        num_classes,
+        embedding_dim=128,
+        hidden_dim=256,
+        num_layers=2,
+        dropout=0.3,
+        bidirectional=True,
+    ):
         super(LSTMClassifier, self).__init__(vocab_size, num_classes)
 
         self.embedding_dim = embedding_dim
@@ -24,11 +33,12 @@ class LSTMClassifier(BaseTextClassifier):
         # Layers
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         self.lstm = nn.LSTM(
-            embedding_dim, hidden_dim,
+            embedding_dim,
+            hidden_dim,
             num_layers=num_layers,
             dropout=dropout if num_layers > 1 else 0,
             bidirectional=bidirectional,
-            batch_first=True
+            batch_first=True,
         )
 
         # Attention layer
@@ -40,7 +50,7 @@ class LSTMClassifier(BaseTextClassifier):
             nn.Dropout(dropout),
             nn.Linear(lstm_output_dim, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
+            nn.Linear(hidden_dim, num_classes),
         )
 
     def forward(self, input_ids, lengths=None):
@@ -65,10 +75,12 @@ class LSTMClassifier(BaseTextClassifier):
     def get_model_info(self):
         """Return model information"""
         info = super().get_model_info()
-        info.update({
-            'embedding_dim': self.embedding_dim,
-            'hidden_dim': self.hidden_dim,
-            'num_layers': self.num_layers,
-            'bidirectional': self.bidirectional
-        })
+        info.update(
+            {
+                "embedding_dim": self.embedding_dim,
+                "hidden_dim": self.hidden_dim,
+                "num_layers": self.num_layers,
+                "bidirectional": self.bidirectional,
+            }
+        )
         return info

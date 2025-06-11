@@ -6,14 +6,21 @@ BERT-based model for text classification
 import torch
 import torch.nn as nn
 from transformers import AutoModel, AutoTokenizer
+
 from .base_model import BaseTextClassifier
 
 
 class BERTClassifier(BaseTextClassifier):
     """BERT-based text classifier using pre-trained transformer"""
 
-    def __init__(self, vocab_size, num_classes, model_name='distilbert-base-uncased',
-                 dropout=0.3, freeze_bert=False):
+    def __init__(
+        self,
+        vocab_size,
+        num_classes,
+        model_name="distilbert-base-uncased",
+        dropout=0.3,
+        freeze_bert=False,
+    ):
         # Note: vocab_size is ignored for BERT (uses its own tokenizer)
         super(BERTClassifier, self).__init__(vocab_size, num_classes)
 
@@ -36,7 +43,7 @@ class BERTClassifier(BaseTextClassifier):
             nn.Linear(self.hidden_size, self.hidden_size // 2),
             nn.ReLU(),
             nn.Dropout(dropout),
-            nn.Linear(self.hidden_size // 2, num_classes)
+            nn.Linear(self.hidden_size // 2, num_classes),
         )
 
         # Store tokenizer for easy access
@@ -54,10 +61,7 @@ class BERTClassifier(BaseTextClassifier):
         attention_mask = (input_ids != 0).long()
 
         # Get BERT outputs
-        bert_outputs = self.bert(
-            input_ids=input_ids,
-            attention_mask=attention_mask
-        )
+        bert_outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
 
         # Use [CLS] token representation for classification
         cls_output = bert_outputs.last_hidden_state[:, 0, :]  # [CLS] token
@@ -68,9 +72,11 @@ class BERTClassifier(BaseTextClassifier):
     def get_model_info(self):
         """Return model information"""
         info = super().get_model_info()
-        info.update({
-            'model_name': self.model_name,
-            'hidden_size': self.hidden_size,
-            'freeze_bert': self.freeze_bert
-        })
+        info.update(
+            {
+                "model_name": self.model_name,
+                "hidden_size": self.hidden_size,
+                "freeze_bert": self.freeze_bert,
+            }
+        )
         return info

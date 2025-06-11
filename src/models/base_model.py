@@ -4,6 +4,7 @@ Base model interface for text classification
 """
 
 from abc import ABC, abstractmethod
+
 import torch.nn as nn
 
 
@@ -23,7 +24,7 @@ class BaseTextClassifier(nn.Module, ABC):
     def get_model_info(self):
         """Return model information"""
         return {
-            'vocab_size': self.vocab_size,
-            'num_classes': self.num_classes,
-            'model_type': self.__class__.__name__
+            "vocab_size": self.vocab_size,
+            "num_classes": self.num_classes,
+            "model_type": self.__class__.__name__,
         }

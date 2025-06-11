@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import requests
 import json
+
+import requests
 
 base_url = "http://127.0.0.1:8080"
 
@@ -29,7 +30,7 @@ test_cases = [
     "find me a flight to boston",
     "what is the cheapest fare",
     "which airlines fly to denver",
-    "what airports are in chicago"
+    "what airports are in chicago",
 ]
 
 for i, text in enumerate(test_cases, 1):
@@ -75,17 +76,19 @@ print_json_response(response)
 # Test 4: Invalid content type (should return 400 with INVALID_CONTENT_TYPE)
 print("\n4. Testing invalid content type:")
 print("-" * 30)
-response = requests.post(f"{base_url}/intent",
-                         data="not json",
-                         headers={"Content-Type": "text/plain"})
+response = requests.post(
+    f"{base_url}/intent", data="not json", headers={"Content-Type": "text/plain"}
+)
 print_json_response(response)
 
 # Test 5: Invalid JSON
 print("\n5. Testing invalid JSON:")
 print("-" * 30)
-response = requests.post(f"{base_url}/intent",
-                         data="invalid json{",
-                         headers={"Content-Type": "application/json"})
+response = requests.post(
+    f"{base_url}/intent",
+    data="invalid json{",
+    headers={"Content-Type": "application/json"},
+)
 print_json_response(response)
 
 # Test 6: Invalid endpoint (should return 404 with NOT_FOUND)

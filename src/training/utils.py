@@ -5,6 +5,7 @@ Training utilities
 
 import os
 import pickle
+
 import torch
 
 
@@ -13,25 +14,25 @@ def save_model_components(model, vocab, label_encoder, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     # Save model state dict
-    torch.save(model.state_dict(), os.path.join(output_dir, 'model.pt'))
+    torch.save(model.state_dict(), os.path.join(output_dir, "model.pt"))
 
     # Save vocab
-    with open(os.path.join(output_dir, 'vocab.pkl'), 'wb') as f:
+    with open(os.path.join(output_dir, "vocab.pkl"), "wb") as f:
         pickle.dump(vocab, f)
 
     # Save label encoder
-    with open(os.path.join(output_dir, 'label_encoder.pkl'), 'wb') as f:
+    with open(os.path.join(output_dir, "label_encoder.pkl"), "wb") as f:
         pickle.dump(label_encoder, f)
 
 
 def load_model_components(model_path):
     """Load vocab and label encoder from saved model"""
     # Load vocab
-    with open(os.path.join(model_path, 'vocab.pkl'), 'rb') as f:
+    with open(os.path.join(model_path, "vocab.pkl"), "rb") as f:
         vocab = pickle.load(f)
 
     # Load label encoder
-    with open(os.path.join(model_path, 'label_encoder.pkl'), 'rb') as f:
+    with open(os.path.join(model_path, "label_encoder.pkl"), "rb") as f:
         label_encoder = pickle.load(f)
 
     return vocab, label_encoder

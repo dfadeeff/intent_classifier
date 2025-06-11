@@ -3,9 +3,11 @@
 Transformer model for text classification
 """
 
+import math
+
 import torch
 import torch.nn as nn
-import math
+
 from .base_model import BaseTextClassifier
 
 
@@ -17,25 +19,35 @@ class PositionalEncoding(nn.Module):
 
         pe = torch.zeros(max_len, embedding_dim)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, embedding_dim, 2).float() *
-                             (-math.log(10000.0) / embedding_dim))
+        div_term = torch.exp(
+            torch.arange(0, embedding_dim, 2).float()
+            * (-math.log(10000.0) / embedding_dim)
+        )
 
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
         pe = pe.unsqueeze(0).transpose(0, 1)
 
-        self.register_buffer('pe', pe)
+        self.register_buffer("pe", pe)
 
     def forward(self, x):
-        return x + self.pe[:x.size(0), :]
+        return x + self.pe[: x.size(0), :]
 
 
 class TransformerClassifier(BaseTextClassifier):
     """Transformer-based text classifier"""
 
-    def __init__(self, vocab_size, num_classes, embedding_dim=128,
-                 num_heads=8, num_layers=4, dim_feedforward=512,
-                 dropout=0.1, max_len=512):
+    def __init__(
+        self,
+        vocab_size,
+        num_classes,
+        embedding_dim=128,
+        num_heads=8,
+        num_layers=4,
+        dim_feedforward=512,
+        dropout=0.1,
+        max_len=512,
+    ):
         super(TransformerClassifier, self).__init__(vocab_size, num_classes)
 
         self.embedding_dim = embedding_dim
@@ -56,8 +68,8 @@ class TransformerClassifier(BaseTextClassifier):
             nhead=num_heads,
             dim_feedforward=dim_feedforward,
             dropout=dropout,
-            activation='relu',
-            batch_first=True
+            activation="relu",
+            batch_first=True,
         )
         self.transformer = nn.TransformerEncoder(encoder_layer, num_layers)
 
@@ -68,7 +80,7 @@ class TransformerClassifier(BaseTextClassifier):
             nn.Linear(embedding_dim, dim_feedforward // 2),
             nn.ReLU(),
             nn.Dropout(dropout),
-            nn.Linear(dim_feedforward // 2, num_classes)
+            nn.Linear(dim_feedforward // 2, num_classes),
         )
 
         # Initialize weights
@@ -105,8 +117,7 @@ class TransformerClassifier(BaseTextClassifier):
 
         # Transformer encoding
         transformer_out = self.transformer(
-            embedded,
-            src_key_padding_mask=src_key_padding_mask
+            embedded, src_key_padding_mask=src_key_padding_mask
         )
 
         # Global average pooling (ignoring padded positions)
@@ -120,11 +131,13 @@ class TransformerClassifier(BaseTextClassifier):
     def get_model_info(self):
         """Return model information"""
         info = super().get_model_info()
-        info.update({
-            'embedding_dim': self.embedding_dim,
-            'num_heads': self.num_heads,
-            'num_layers': self.num_layers,
-            'dim_feedforward': self.dim_feedforward,
-            'max_len': self.max_len
-        })
+        info.update(
+            {
+                "embedding_dim": self.embedding_dim,
+                "num_heads": self.num_heads,
+                "num_layers": self.num_layers,
+                "dim_feedforward": self.dim_feedforward,
+                "max_len": self.max_len,
+            }
+        )
         return info
