@@ -2,14 +2,25 @@
 
 import os
 import argparse
-from collections import OrderedDict
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from intent_classifier import IntentClassifier
+from flask_swagger_ui import get_swaggerui_blueprint
 
 # Global model instance
 app = Flask(__name__)
 model = IntentClassifier()
+
+SWAGGER_URL = '/docs'
+API_URL = '/swagger.yaml'
+swaggerui_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL, config={'app_name': "Intent Classification API"})
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
+@app.route('/swagger.yaml')
+def swagger_spec():
+    """Serve the swagger specification file"""
+    return send_from_directory('docs', 'swagger.yaml')
 
 
 @app.route('/ready', methods=['GET'])
@@ -113,15 +124,15 @@ def main():
     print(f"Loading model from: {args.model}")
     try:
         model.load(args.model)
-        print("✅ Model loaded successfully!")
+        print("Model loaded successfully!")
     except Exception as e:
-        print(f"❌ Error loading model: {e}")
+        print(f"Error loading model: {e}")
         return 1
 
     # Start the Flask server
-    print(f"🚀 Starting server on port {args.port}")
-    print(f"🔗 Health check: http://localhost:{args.port}/ready")
-    print(f"🎯 Classification: http://localhost:{args.port}/intent")
+    print(f"Starting server on port {args.port}")
+    print(f"Health check: http://localhost:{args.port}/ready")
+    print(f"Classification: http://localhost:{args.port}/intent")
 
     app.run(host='0.0.0.0', port=args.port, debug=False)
     return 0
