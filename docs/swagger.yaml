@@ -1,0 +1,196 @@
+
+info:
+  title: Intent Classification API
+  description: |
+    AI-powered intent classification service for natural language understanding.
+    Supports multiple model architectures (LSTM, Transformer, BERT) with automatic model detection.
+  version: 1.0.0
+  contact:
+    name: ML Engineering Team
+    contact: fadejeff@gmail.com
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+
+paths:
+  /ready:
+    get:
+      summary: Health Check
+      description: Check if the server is running and model is loaded
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is ready and model is loaded
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "OK"
+        '423':
+          description: Server is running but model is not ready
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Not ready"
+
+  /intent:
+    post:
+      summary: Classify Intent
+      description: |
+        Classify the intent of a given text utterance.
+        Returns top 3 intent predictions with confidence scores.
+      tags:
+        - Classification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: Input sentence for intent classification
+                  example: "find me a flight that flies from Memphis to tacoma"
+                  minLength: 1
+            examples:
+              flight_query:
+                summary: Flight booking query
+                value:
+                  text: "find me a flight from Boston to Denver"
+              fare_inquiry:
+                summary: Fare price inquiry
+                value:
+                  text: "what is the cheapest fare to Miami"
+              airport_info:
+                summary: Airport information request
+                value:
+                  text: "which airports are in Chicago"
+
+      responses:
+        '200':
+          description: Successful intent classification
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  intents:
+                    type: array
+                    description: Array of top 3 intent predictions
+                    maxItems: 3
+                    items:
+                      $ref: '#/components/schemas/Prediction'
+              examples:
+                flight_result:
+                  summary: Flight intent classification result
+                  value:
+                    intents:
+                      - label: "flight"
+                        confidence: 0.973
+                      - label: "aircraft"
+                        confidence: 0.015
+                      - label: "capacity"
+                        confidence: 0.008
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                empty_text:
+                  summary: Empty text provided
+                  value:
+                    label: "TEXT_EMPTY"
+                    message: "\"text\" is empty."
+                missing_field:
+                  summary: Missing text field
+                  value:
+                    label: "MISSING_TEXT_FIELD"
+                    message: "\"text\" field is required"
+                invalid_content_type:
+                  summary: Invalid content type
+                  value:
+                    label: "INVALID_CONTENT_TYPE"
+                    message: "Content-Type must be application/json"
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                internal_error:
+                  summary: Internal processing error
+                  value:
+                    label: "INTERNAL_ERROR"
+                    message: "Model prediction failed: CUDA out of memory"
+
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                model_not_ready:
+                  summary: Model not loaded
+                  value:
+                    label: "MODEL_NOT_READY"
+                    message: "Model is not loaded or ready"
+
+components:
+  schemas:
+    Prediction:
+      type: object
+      required:
+        - label
+        - confidence
+      properties:
+        label:
+          type: string
+          description: Intent label name
+          example: "flight"
+        confidence:
+          type: number
+          format: float
+          description: Probability score for the predicted intent
+          minimum: 0.0
+          maximum: 1.0
+          example: 0.73
+
+    Error:
+      type: object
+      required:
+        - label
+        - message
+      properties:
+        label:
+          type: string
+          description: Error code identifier
+          enum:
+            - "TEXT_EMPTY"
+            - "MISSING_TEXT_FIELD"
+            - "INVALID_CONTENT_TYPE"
+            - "MODEL_NOT_READY"
+            - "INTERNAL_ERROR"
+            - "NOT_FOUND"
+            - "METHOD_NOT_ALLOWED"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "\"text\" is empty."
+
+tags:
+  - name: Health
+    description: Service health and readiness checks
+  - name: Classification
+    description: Intent classification operations
