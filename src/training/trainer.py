@@ -6,9 +6,6 @@ Generic trainer for text classification models
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
-import os
-import pickle
 from .utils import save_model_components
 
 
@@ -80,8 +77,8 @@ class TextClassifierTrainer:
     def train(self, train_loader, val_loader, num_epochs, verbose=True):
         """Full training loop"""
         if verbose:
-            print(f"🤖 Training on {self.device}")
-            print(f"📊 Model: {self.model.__class__.__name__}")
+            print(f" Training on {self.device}")
+            print(f" Model: {self.model.__class__.__name__}")
 
         for epoch in range(num_epochs):
             # Train
@@ -101,5 +98,5 @@ class TextClassifierTrainer:
     def save_model(self, output_dir, vocab, label_encoder):
         """Save model and components"""
         save_model_components(self.model, vocab, label_encoder, output_dir)
-        print(f"✅ Model saved to {output_dir}")
-        print(f"🎯 Best accuracy: {self.best_accuracy:.4f}")
+        print(f" Model saved to {output_dir}")
+        print(f" Best accuracy: {self.best_accuracy:.4f}")

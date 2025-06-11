@@ -44,7 +44,7 @@ def count_parameters(model):
 
 def print_model_info(model, vocab, label_encoder):
     """Print model information"""
-    print(f"📊 Model: {model.__class__.__name__}")
-    print(f"📚 Vocabulary size: {len(vocab)}")
-    print(f"🏷️  Classes: {list(label_encoder.classes_)}")
-    print(f"🔢 Trainable parameters: {count_parameters(model):,}")
+    print(f" Model: {model.__class__.__name__}")
+    print(f" Vocabulary size: {len(vocab)}")
+    print(f"️ Classes: {list(label_encoder.classes_)}")
+    print(f" Trainable parameters: {count_parameters(model):,}")
