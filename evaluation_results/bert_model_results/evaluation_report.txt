@@ -1,0 +1,110 @@
+Model Evaluation Results
+==================================================
+
+Test Accuracy: 0.9729 (97.29%)
+Average Confidence: 0.9838
+Total Samples: 850
+Correct Predictions: 827
+Misclassified: 23
+
+Classification Report:
+------------------------------
+                   precision    recall  f1-score   support
+
+     abbreviation       0.96      1.00      0.98        26
+         aircraft       0.88      0.88      0.88         8
+          airfare       0.92      1.00      0.96        48
+   airfare+flight       0.00      0.00      0.00         1
+          airline       1.00      1.00      1.00        28
+          airport       0.93      1.00      0.96        13
+         capacity       1.00      1.00      1.00        21
+             city       1.00      0.80      0.89         5
+         day_name       0.00      0.00      0.00         2
+         distance       1.00      1.00      1.00        10
+           flight       0.99      0.99      0.99       613
+   flight+airfare       0.86      0.50      0.63        12
+   flight+airline       0.00      0.00      0.00         1
+        flight_no       0.89      1.00      0.94         8
+flight_no+airline       0.00      0.00      0.00         1
+      flight_time       1.00      1.00      1.00         1
+      ground_fare       1.00      0.71      0.83         7
+   ground_service       0.97      1.00      0.99        36
+             meal       0.86      1.00      0.92         6
+         quantity       0.38      1.00      0.55         3
+
+         accuracy                           0.97       850
+        macro avg       0.73      0.74      0.73       850
+     weighted avg       0.97      0.97      0.97       850
+
+
+Misclassified Examples:
+------------------------------
+ 1. 'show flight and prices kansas city to chicago on next wednesday arriving in chicago by 7 pm'
+    True: flight+airfare | Predicted: flight (conf: 0.996)
+
+ 2. 'what day of the week do flights from nashville to tacoma fly on'
+    True: day_name | Predicted: flight (conf: 0.998)
+
+ 3. 'what days of the week do flights from san jose to nashville fly on'
+    True: day_name | Predicted: flight (conf: 0.995)
+
+ 4. 'does the airport at burbank have a flight that comes in from kansas city'
+    True: flight | Predicted: airport (conf: 0.883)
+
+ 5. 'show me the connecting flights between boston and denver and the types of aircraft used'
+    True: flight | Predicted: aircraft (conf: 0.989)
+
+ 6. 'what 's the fare for a taxi to denver'
+    True: ground_fare | Predicted: airfare (conf: 0.846)
+
+ 7. 'at the charlotte airport how many different types of aircraft are there for us air'
+    True: aircraft | Predicted: quantity (conf: 0.811)
+
+ 8. 'list the airfare for american airlines flight 19 from jfk to lax'
+    True: airfare+flight | Predicted: airfare (conf: 0.998)
+
+ 9. 'list limousine rates for the city of boston'
+    True: ground_fare | Predicted: ground_service (conf: 0.747)
+
+10. 'i need a round trip flight from san diego to washington dc and the fares'
+    True: flight+airfare | Predicted: flight (conf: 0.488)
+
+11. 'i need a round trip from atlanta to washington dc and the fares leaving in the morning'
+    True: flight+airfare | Predicted: airfare (conf: 0.721)
+
+12. 'i need a round trip from phoenix to washington dc and the fare leaving in the morning'
+    True: flight+airfare | Predicted: airfare (conf: 0.920)
+
+13. 'i need flight and airline information for a flight from denver to salt lake city on monday departing after 5 pm'
+    True: flight+airline | Predicted: flight (conf: 0.998)
+
+14. 'i need flight and fare information for thursday departing prior to 9 am from oakland going to salt lake city'
+    True: flight+airfare | Predicted: flight (conf: 0.957)
+
+15. 'i need flight and fare information departing from oakland to salt lake city on thursday before 8 am'
+    True: flight+airfare | Predicted: flight (conf: 0.839)
+
+16. 'i need flight numbers and airlines for flights departing from oakland to salt lake city on thursday departing before 8 am'
+    True: flight_no+airline | Predicted: flight_no (conf: 0.224)
+
+17. 'list la'
+    True: city | Predicted: abbreviation (conf: 0.959)
+
+18. 'give me the flights and fares for a trip to cleveland from miami on wednesday'
+    True: flight | Predicted: flight+airfare (conf: 0.912)
+
+19. 'give me the meal flights departing early saturday morning from chicago to seattle nonstop'
+    True: flight | Predicted: meal (conf: 0.533)
+
+20. 'how many northwest flights leave st. paul'
+    True: flight | Predicted: quantity (conf: 0.979)
+
+21. 'how many northwest flights leave washington dc'
+    True: flight | Predicted: quantity (conf: 0.978)
+
+22. 'how many flights does northwest have leaving dulles'
+    True: flight | Predicted: quantity (conf: 0.978)
+
+23. 'how many flights does alaska airlines have to burbank'
+    True: flight | Predicted: quantity (conf: 0.978)
+

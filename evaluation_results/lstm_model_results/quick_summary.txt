@@ -1,0 +1,13 @@
+Model Evaluation Summary
+==============================
+
+Model: lstm_model
+Model Type: traditional
+Test Accuracy: 0.9565 (95.65%)
+Correct Predictions: 813/850
+Misclassified: 37
+Average Confidence: 0.9911
+
+Files generated:
+- evaluation_report.txt (detailed results)
+- quick_summary.txt (this file)

@@ -1,0 +1,13 @@
+Model Evaluation Summary
+==============================
+
+Model: bert_model
+Model Type: bert
+Test Accuracy: 0.9729 (97.29%)
+Correct Predictions: 827/850
+Misclassified: 23
+Average Confidence: 0.9838
+
+Files generated:
+- evaluation_report.txt (detailed results)
+- quick_summary.txt (this file)
