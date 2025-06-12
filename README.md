@@ -62,8 +62,12 @@ python scripts/train_bert.py
 # Use best performing model (BERT)
 python server.py --model output_models/bert_model --port 8080
 
-# Or specify different model
+# Or specify different model: Transformer
 python server.py --model output_models/transformer_model --port 8080
+
+# Or specify different model: LSTM
+python server.py --model output_models/lstm_model --port 8080
+
 ```
 
 ### Test API
