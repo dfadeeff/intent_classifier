@@ -84,9 +84,32 @@ curl http://localhost:8080/ready
 # Classify intent
 curl -X POST http://localhost:8080/intent \
   -H 'Content-Type: application/json' \
-  -d '{"text": "find me a flight to boston"}'
+  -d '{"text": "find me a flight to boston"}' | python -m json.tool
   
 ```
+
+### Expected Resoinse 
+```bash
+
+{
+    "intents": [
+        {
+            "label": "flight",
+            "confidence": 1.0
+        },
+        {
+            "label": "flight+airfare",
+            "confidence": 0.0
+        },
+        {
+            "label": "airport",
+            "confidence": 0.0
+        }
+    ]
+}
+
+```
+
 
 ## 📊 Model Performance
 
