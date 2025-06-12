@@ -168,6 +168,11 @@ Content-Type: application/json
 
 ## 📊 Model Performance
 
+## Documentation
+
+Detailed documentation can be found under docs/ in the project structure
+
+
 ### Test Results (ATIS Dataset, 850 samples)
 
 #### BERT Classifier (Production Model)
@@ -293,7 +298,9 @@ intent-classification-service/
 ├── data/
 │   └── atis/                        # ATIS dataset
 └── docs/
-    └── experiments.md               # Detailed experimental results
+    ├── experiments.md               # Detailed experimental results
+    ├── swagger.yaml                 # Swagger documentation
+    └── architectural_design.ml      # System design description
 ```
 
 ## 🤝 Contributing
