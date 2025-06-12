@@ -146,6 +146,8 @@ curl -X POST http://localhost:8080/intent \
 
 The service provides comprehensive API documentation through Swagger/OpenAPI integration.
 
+![Swagger UI](images/swagger-ui.png)
+
 ### Interactive Documentation
 Access the interactive API documentation at: `http://localhost:8080/docs`
 
