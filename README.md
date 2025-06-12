@@ -110,6 +110,50 @@ curl -X POST http://localhost:8080/intent \
 
 ```
 
+## 🔌 API Documentation
+
+The service provides comprehensive API documentation through Swagger/OpenAPI integration.
+
+### Interactive Documentation
+Access the interactive API documentation at: `http://localhost:8080/docs`
+
+### Health Check
+```
+GET /ready
+```
+Returns `200 OK` when service is ready, `423` when loading.
+
+### Intent Classification
+```
+POST /intent
+Content-Type: application/json
+
+{
+  "text": "find me a flight that flies from Memphis to tacoma"
+}
+```
+
+**Response:**
+```json
+{
+  "intents": [{
+    "label": "flight",
+    "confidence": 0.973
+  }, {
+    "label": "aircraft", 
+    "confidence": 0.018
+  }, {
+    "label": "airline",
+    "confidence": 0.007
+  }]
+}
+```
+
+### Error Handling
+- **400**: Empty text input
+- **500**: Internal server errors
+- Comprehensive error messages with proper HTTP status codes
+
 
 
 ## 📊 Model Performance
@@ -157,44 +201,6 @@ python scripts/test_model.py --model output_models/bert_model
 - **Performance comparison**: Speed vs accuracy trade-offs
 - **Visualization**: Confusion matrices and performance plots
 
-## 🔌 API Documentation
-
-### Health Check
-```
-GET /ready
-```
-Returns `200 OK` when service is ready, `423` when loading.
-
-### Intent Classification
-```
-POST /intent
-Content-Type: application/json
-
-{
-  "text": "find me a flight that flies from Memphis to tacoma"
-}
-```
-
-**Response:**
-```json
-{
-  "intents": [{
-    "label": "flight",
-    "confidence": 0.973
-  }, {
-    "label": "aircraft", 
-    "confidence": 0.018
-  }, {
-    "label": "airline",
-    "confidence": 0.007
-  }]
-}
-```
-
-### Error Handling
-- **400**: Empty text input
-- **500**: Internal server errors
-- Comprehensive error messages with proper HTTP status codes
 
 ## 🏛️ Model Architectures
 
