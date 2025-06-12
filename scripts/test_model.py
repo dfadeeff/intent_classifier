@@ -148,7 +148,7 @@ def main():
         else:
             args.output = os.path.join(project_root, args.output)
 
-    print("🧪 Testing trained model...")
+    print("Testing trained model...")
     print(f"Model: {args.model}")
     print(f"Test data: {args.data}")
     print(f"Results will be saved to: {results_dir}")
@@ -156,11 +156,11 @@ def main():
 
     # Detect model type and load accordingly
     model_type = detect_model_type(args.model)
-    print(f"🔍 Detected model type: {model_type}")
+    print(f"Detected model type: {model_type}")
 
     try:
         if model_type == "bert":
-            print("🤖 Loading BERT model...")
+            print("Loading BERT model...")
             model, vocab, label_encoder = load_bert_model(args.model)
 
             # Create a custom classifier wrapper for BERT
@@ -195,17 +195,17 @@ def main():
                     return results
 
             classifier = BERTClassifierWrapper(model, vocab, label_encoder)
-            print("✅ BERT model loaded successfully!")
+            print("BERT model loaded successfully!")
 
         else:
             # Use traditional IntentClassifier for LSTM/Transformer
-            print("🔄 Loading traditional model...")
+            print("Loading traditional model...")
             classifier = IntentClassifier()
             classifier.load(args.model)
-            print("✅ Model loaded successfully!")
+            print("Model loaded successfully!")
 
     except Exception as e:
-        print(f"❌ Error loading model: {e}")
+        print(f"Error loading model: {e}")
         import traceback
 
         traceback.print_exc()
@@ -231,19 +231,19 @@ def main():
                 viz_dir = os.path.join(results_dir, "plots")
                 visualizer.create_evaluation_report(viz_dir)
             except ImportError:
-                print("⚠️  Visualization requires matplotlib and seaborn.")
-                print("   Install with: pip install matplotlib seaborn")
+                print("Visualization requires matplotlib and seaborn.")
+                print("Install with: pip install matplotlib seaborn")
             except Exception as e:
-                print(f"⚠️  Visualization error: {e}")
+                print(f"Visualization error: {e}")
 
         # Final summary
         accuracy = results["basic_metrics"]["accuracy"]
         misclassified_count = len(results["misclassified_examples"])
         total_samples = results["basic_metrics"]["total_samples"]
 
-        print(f"\n🎉 Final Test Accuracy: {accuracy:.4f} ({accuracy * 100:.2f}%)")
-        print(f"📁 All results saved to: {results_dir}")
-        print(f"   📄 Detailed report: {os.path.basename(args.output)}")
+        print(f"\n Final Test Accuracy: {accuracy:.4f} ({accuracy * 100:.2f}%)")
+        print(f"All results saved to: {results_dir}")
+        print(f"Detailed report: {os.path.basename(args.output)}")
         if args.visualize:
             print(f"   📊 Visualizations: plots/")
 
@@ -273,7 +273,7 @@ def main():
         return 0
 
     except Exception as e:
-        print(f"❌ Error during evaluation: {e}")
+        print(f"Error during evaluation: {e}")
         import traceback
 
         traceback.print_exc()

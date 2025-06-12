@@ -3,11 +3,12 @@ Model Evaluation Summary
 
 Model: transformer_model
 Model Type: traditional
-Test Accuracy: 0.9624 (96.24%)
-Correct Predictions: 818/850
-Misclassified: 32
-Average Confidence: 0.9908
+Test Accuracy: 0.9647 (96.47%)
+Correct Predictions: 820/850
+Misclassified: 30
+Average Confidence: 0.9916
 
 Files generated:
 - evaluation_report.txt (detailed results)
 - quick_summary.txt (this file)
+- plots/ (visualization charts)

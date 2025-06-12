@@ -22,17 +22,17 @@ from src.training.utils import print_model_info
 
 
 def main():
-    print("🚀 Starting Transformer training...")
+    print("Starting Transformer training...")
 
     # Load data (fix path to work from scripts directory)
     train_file = "../data/atis/train.tsv"
     if not os.path.exists(train_file):
-        print(f"❌ File not found: {train_file}")
+        print(f"File not found: {train_file}")
         print("Make sure you have data/atis/train.tsv")
         return
 
     data = pd.read_csv(train_file, sep="\t", header=None, names=["text", "intent"])
-    print(f"📊 Loaded {len(data)} samples with {data['intent'].nunique()} intents")
+    print(f"Loaded {len(data)} samples with {data['intent'].nunique()} intents")
 
     # Build vocab
     vocab = build_vocab(data["text"].tolist())
@@ -42,8 +42,8 @@ def main():
     labels = label_encoder.fit_transform(data["intent"])
 
     # Print info
-    print(f"📚 Vocabulary size: {len(vocab)}")
-    print(f"🏷️  Classes: {list(label_encoder.classes_)}")
+    print(f"Vocabulary size: {len(vocab)}")
+    print(f"Classes: {list(label_encoder.classes_)}")
 
     # Split data
     X_train, X_val, y_train, y_val = train_test_split(
@@ -66,12 +66,13 @@ def main():
     model = TransformerClassifier(
         vocab_size=len(vocab),
         num_classes=len(label_encoder.classes_),
-        embedding_dim=128,  # Smaller for efficiency
+        embedding_dim=256,  # Increased from 128
         num_heads=8,  # 8 attention heads
-        num_layers=4,  # 4 transformer layers
-        dim_feedforward=512,  # Feed-forward dimension
+        num_layers=6,  # increased from 4 transformer layers
+        dim_feedforward=1024,  # increased from 512
         dropout=0.1,  # Lower dropout for transformer
-        max_len=128,  # Maximum sequence length
+        max_len=512,  # Maximum sequence length increased from 128
+        use_layer_norm=True,
     )
 
     print_model_info(model, vocab, label_encoder)
@@ -85,7 +86,7 @@ def main():
     best_accuracy = trainer.train(
         train_loader=train_loader,
         val_loader=val_loader,
-        num_epochs=25,  # More epochs for transformer
+        num_epochs=30,  # increased from 25 which was for a smaller transformer
         verbose=True,
     )
 
