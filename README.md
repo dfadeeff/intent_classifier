@@ -59,6 +59,9 @@ python scripts/train_bert.py
 
 ### Start API Service
 ```bash
+
+# Open one terminal and start service for ONE of the models:
+
 # Use best performing model (BERT)
 python server.py --model output_models/bert_model --port 8080
 
@@ -72,6 +75,9 @@ python server.py --model output_models/lstm_model --port 8080
 
 ### Test API
 ```bash
+
+# Open a second terminal and test the model that you have specified in the first terminal above
+
 # Check service health
 curl http://localhost:8080/ready
 
@@ -79,6 +85,7 @@ curl http://localhost:8080/ready
 curl -X POST http://localhost:8080/intent \
   -H 'Content-Type: application/json' \
   -d '{"text": "find me a flight to boston"}'
+  
 ```
 
 ## 📊 Model Performance
