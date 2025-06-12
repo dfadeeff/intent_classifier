@@ -13,7 +13,6 @@ This repository implements a scalable intent classification service that can be 
 - **Model Comparison Framework**: Systematic evaluation and benchmarking tools
 - **Modular Design**: Easy integration of new model types
 - **Comprehensive Evaluation**: Detailed metrics, confusion matrices, and error analysis
-- **Language Agnostic**: Designed for multi-language support (currently English/ATIS)
 
 ## 🏗️ Architecture
 
