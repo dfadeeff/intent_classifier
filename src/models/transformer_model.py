@@ -38,16 +38,16 @@ class TransformerClassifier(BaseTextClassifier):
     """Transformer-based text classifier"""
 
     def __init__(
-            self,
-            vocab_size,
-            num_classes,
-            embedding_dim=256,  # increased from 128
-            num_heads=8,
-            num_layers=6,  # increased from 4
-            dim_feedforward=1024,  # increased from 512
-            dropout=0.1,
-            max_len=512,
-            use_layer_norm=True,  # additional normalization
+        self,
+        vocab_size,
+        num_classes,
+        embedding_dim=256,  # increased from 128
+        num_heads=8,
+        num_layers=6,  # increased from 4
+        dim_feedforward=1024,  # increased from 512
+        dropout=0.1,
+        max_len=512,
+        use_layer_norm=True,  # additional normalization
     ):
         super(TransformerClassifier, self).__init__(vocab_size, num_classes)
 
@@ -82,10 +82,7 @@ class TransformerClassifier(BaseTextClassifier):
 
         # Multi-head pooling (more sophisticated than simple average)
         self.pooling_heads = nn.MultiheadAttention(
-            embed_dim=embedding_dim,
-            num_heads=4,
-            dropout=dropout,
-            batch_first=True
+            embed_dim=embedding_dim, num_heads=4, dropout=dropout, batch_first=True
         )
 
         # Classification head
@@ -96,11 +93,9 @@ class TransformerClassifier(BaseTextClassifier):
             nn.Linear(embedding_dim, dim_feedforward),  # larger hidden layer
             nn.GELU(),  # changed from ReLU()
             nn.Dropout(dropout),
-
             # added two more steps
             nn.Linear(dim_feedforward, dim_feedforward // 2),
             nn.GELU(),
-
             nn.Linear(dim_feedforward // 2, num_classes),
         )
 
@@ -118,7 +113,9 @@ class TransformerClassifier(BaseTextClassifier):
                     nn.init.constant_(module.bias, 0)
 
             elif isinstance(module, nn.Embedding):
-                nn.init.normal_(module.weight, 0, 0.02)  # Smaller std for larger embeddings
+                nn.init.normal_(
+                    module.weight, 0, 0.02
+                )  # Smaller std for larger embeddings
             elif isinstance(module, nn.LayerNorm):
                 nn.init.constant_(module.bias, 0)
                 nn.init.constant_(module.weight, 1.0)
@@ -142,7 +139,7 @@ class TransformerClassifier(BaseTextClassifier):
             key=transformer_out,
             value=transformer_out,
             key_padding_mask=padding_mask,
-            need_weights=False
+            need_weights=False,
         )
 
         return pooled_output.squeeze(1)  # Remove sequence dimension
@@ -197,7 +194,7 @@ class TransformerClassifier(BaseTextClassifier):
                 "max_len": self.max_len,
                 "use_layer_norm": self.use_layer_norm,
                 "total_parameters": total_params,
-                "architecture": "Enhanced Transformer with attention pooling"
+                "architecture": "Enhanced Transformer with attention pooling",
             }
         )
         return info
