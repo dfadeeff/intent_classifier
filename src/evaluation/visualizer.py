@@ -41,7 +41,7 @@ class EvaluationVisualizer:
 
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches="tight")
-            print(f"📊 Confusion matrix saved to: {save_path}")
+            print(f"Confusion matrix saved to: {save_path}")
 
         plt.show()
 
@@ -102,7 +102,7 @@ class EvaluationVisualizer:
 
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches="tight")
-            print(f"📊 Confidence distribution saved to: {save_path}")
+            print(f"Confidence distribution saved to: {save_path}")
 
         plt.show()
 
