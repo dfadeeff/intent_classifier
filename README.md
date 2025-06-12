@@ -55,6 +55,16 @@ python scripts/train_transformer.py
 
 # Train BERT (highest accuracy)
 python scripts/train_bert.py
+
+# Trained models will be saved under output_models/
+
+output_models/
+  bert_model/
+  lstm_model/
+  transformer_model/
+  
+# Once the model have been trained, you can test them and check the inference service
+
 ```
 
 ### Start API Service
