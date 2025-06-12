@@ -14,7 +14,7 @@ This document outlines the experimental approach and results for selecting the b
 ## Experimental Setup
 
 ### Common Training Configuration
-```python
+```bash
 # Shared parameters across all models
 batch_size = 16
 test_size = 0.2
@@ -31,15 +31,15 @@ val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False, collate_fn=co
 ```
 
 ### Evaluation Framework
-```python
+```bash
 # Consistent testing across all models
 python test_model.py --model output_models/[model_name]
 
 # Metrics collected:
-- Test accuracy on 850 samples
-- Per-class precision, recall, F1-score
-- Average confidence scores
-- Detailed misclassification analysis
+# - Test accuracy on 850 samples
+# - Per-class precision, recall, F1-score
+# - Average confidence scores
+# - Detailed misclassification analysis
 ```
 
 ---
@@ -47,7 +47,7 @@ python test_model.py --model output_models/[model_name]
 ## Model 1: LSTM Classifier
 
 ### Architecture
-```python
+```text
 class LSTMClassifier(BaseTextClassifier):
     def __init__(
         self,
@@ -68,7 +68,7 @@ class LSTMClassifier(BaseTextClassifier):
 - **Higher regularization**: 0.3 dropout to prevent overfitting
 
 ### Training Configuration
-```python
+```text
 model = LSTMClassifier(
     vocab_size=len(vocab),
     num_classes=len(label_encoder.classes_),
@@ -112,7 +112,7 @@ Weighted Average Metrics:
 ## Model 2: Enhanced Transformer Classifier
 
 ### Architecture
-```python
+```text
 class TransformerClassifier(BaseTextClassifier):
     def __init__(
         self,
@@ -136,7 +136,7 @@ class TransformerClassifier(BaseTextClassifier):
 - **Scaled parameters**: 5.9M parameters (20x larger than LSTM)
 
 ### Training Configuration
-```python
+```text
 model = TransformerClassifier(
     vocab_size=len(vocab),
     num_classes=len(label_encoder.classes_),
@@ -191,7 +191,7 @@ Weighted Average Metrics:
 ## Model 3: BERT Classifier
 
 ### Architecture
-```python
+```text
 class BERTClassifier(BaseTextClassifier):
     def __init__(
         self,
@@ -210,7 +210,7 @@ class BERTClassifier(BaseTextClassifier):
 - **Custom classification head**: Task-specific layers on top
 
 ### Training Configuration
-```python
+```text
 model = BERTClassifier(
     vocab_size=len(vocab),  # Not used
     num_classes=len(label_encoder.classes_),
