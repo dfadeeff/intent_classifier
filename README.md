@@ -300,7 +300,7 @@ intent-classification-service/
 └── docs/
     ├── experiments.md               # Detailed experimental results
     ├── swagger.yaml                 # Swagger documentation
-    └── architectural_design.ml      # System design description
+    └── architectural_design.md      # System design description
 ```
 
 ## 🤝 Contributing
