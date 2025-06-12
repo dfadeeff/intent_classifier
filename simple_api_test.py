@@ -18,12 +18,12 @@ def print_json_response(response):
         print(f"Response: {response.text}")
 
 
-print("🔍 Testing health check...")
+print("Testing health check...")
 response = requests.get(f"{base_url}/ready")
 print(f"Health check: {response.status_code} - {response.text}")
 
 print("\n" + "=" * 60)
-print("🎯 TESTING INTENT CLASSIFICATION - FULL JSON RESPONSES")
+print("TESTING INTENT CLASSIFICATION - FULL JSON RESPONSES")
 print("=" * 60)
 
 test_cases = [
@@ -49,7 +49,7 @@ for i, text in enumerate(test_cases, 1):
             print(f"  {j}. {intent['label']} (confidence: {intent['confidence']})")
 
 print("\n" + "=" * 60)
-print("🚨 TESTING ERROR CASES")
+print("TESTING ERROR CASES")
 print("=" * 60)
 
 # Test 1: Empty text (should return 400 with TEXT_EMPTY)
@@ -104,9 +104,9 @@ response = requests.get(f"{base_url}/intent")
 print_json_response(response)
 
 print("\n" + "=" * 60)
-print("📊 SUMMARY")
+print("SUMMARY")
 print("=" * 60)
-print("✅ All tests completed!")
+print("All tests completed!")
 print("Check that:")
 print("• Intent responses have 'intents' array with top 3 predictions")
 print("• Each prediction has 'label' (string) and 'confidence' (float)")
