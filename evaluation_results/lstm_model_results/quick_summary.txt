@@ -11,3 +11,4 @@ Average Confidence: 0.9911
 Files generated:
 - evaluation_report.txt (detailed results)
 - quick_summary.txt (this file)
+- plots/ (visualization charts)

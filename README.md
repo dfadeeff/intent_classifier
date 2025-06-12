@@ -63,9 +63,26 @@ output_models/
   lstm_model/
   transformer_model/
   
-# Once the model have been trained, you can test them and check the inference service
 
 ```
+### Test Models
+```bash
+# Test a model
+python scripts/test_model.py --model output_models/[model]
+
+# Test LSTM 
+python scripts/test_model.py --model output_models/lstm_model
+# Test Transformer 
+python scripts/test_model.py --model output_models/transformer_model
+# Test BERT 
+python scripts/test_model.py --model output_models/bert_model 
+
+# If you wish to visualize you can add visualize argument
+python scripts/test_model.py --model output_models/[model] --visualize
+
+
+```
+
 
 ### Start API Service
 ```bash
@@ -95,6 +112,7 @@ curl http://localhost:8080/ready
 curl -X POST http://localhost:8080/intent \
   -H 'Content-Type: application/json' \
   -d '{"text": "find me a flight to boston"}' | python -m json.tool
+
   
 ```
 
@@ -295,12 +313,14 @@ intent-classification-service/
 │   ├── train_transformer.py         # Transformer training
 │   ├── train_bert.py                # BERT training
 │   └── test_model.py                # Model testing
+├── tests/                           # Suite of tests
 ├── data/
 │   └── atis/                        # ATIS dataset
 └── docs/
     ├── experiments.md               # Detailed experimental results
     ├── swagger.yaml                 # Swagger documentation
     └── architectural_design.md      # System design description
+    
 ```
 
 ## 🤝 Contributing
