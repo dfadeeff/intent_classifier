@@ -13,22 +13,6 @@ This document outlines the experimental approach and results for selecting the b
 
 ## Experimental Setup
 
-### Common Training Configuration
-```bash
-# Shared parameters across all models
-batch_size = 16
-test_size = 0.2
-random_state = 42
-
-# Data preprocessing
-vocab = build_vocab(data["text"].tolist())
-label_encoder = LabelEncoder()
-labels = label_encoder.fit_transform(data["intent"])
-
-# Dataset creation
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn)
-val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False, collate_fn=collate_fn)
-```
 
 ### Evaluation Framework
 ```bash
@@ -158,15 +142,6 @@ best_accuracy = trainer.train(
 )
 ```
 
-### Training Progress
-```
-Epoch 1/30: Loss=0.8567, Acc=0.8932, Best=0.8932
-Epoch 2/30: Loss=0.4017, Acc=0.9428, Best=0.9428
-Epoch 3/30: Loss=0.2655, Acc=0.9633, Best=0.9633
-Epoch 8/30: Loss=0.0754, Acc=0.9763, Best=0.9763
-Epoch 20/30: Loss=0.0334, Acc=0.9655, Best=0.9763
-```
-
 ### Test Results
 ```
 🎯 Test Accuracy: 0.9647 (96.47%)
@@ -255,19 +230,19 @@ Weighted Average Metrics:
 
 | Model | Parameters | Test Accuracy | Avg Confidence | Misclassified | Weighted F1 |
 |-------|------------|---------------|----------------|---------------|-------------|
-| LSTM | ~300K | **95.65%** | 99.11% | 37/850 | 0.95 |
-| Transformer | 5.9M | **96.47%** | 99.16% | 30/850 | 0.96 |
-| **BERT** | **66M** | **97.29%** | **98.38%** | **23/850** | **0.97** |
+| LSTM | ~2.1m      | **95.65%** | 99.11% | 37/850 | 0.95 |
+| Transformer | ~5.9M      | **96.47%** | 99.16% | 30/850 | 0.96 |
+| **BERT** | **66M**    | **97.29%** | **98.38%** | **23/850** | **0.97** |
 
 ### Key Insights
 
 #### 1. Accuracy Progression
-- **LSTM → Transformer**: +0.82% accuracy gain (20x more parameters)
+- **LSTM → Transformer**: +0.82% accuracy gain (3x more parameters)
 - **Transformer → BERT**: +0.82% accuracy gain (11x more parameters)
 - **LSTM → BERT**: +1.64% total accuracy improvement
 
 #### 2. Parameter Efficiency
-- **LSTM**: Most parameter-efficient (95.65% with 300K params)
+- **LSTM**: Most parameter-efficient (95.65% with 2.1m params)
 - **Transformer**: Good balance (96.47% with 5.9M params)
 - **BERT**: Best accuracy but largest model (97.29% with 66M params)
 
