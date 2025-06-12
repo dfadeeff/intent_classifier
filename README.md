@@ -216,9 +216,9 @@ Content-Type: application/json
 
 ```
 intent-classification-service/
-├── README.md                          # This file
-├── requirements.txt                   # Python dependencies
-├── server.py                         # HTTP API service
+├── README.md                        # This file
+├── requirements.txt                 # Python dependencies
+├── server.py                        # HTTP API service
 ├── intent_classifier.py             # Main classifier interface
 ├── src/
 │   ├── models/
@@ -238,12 +238,12 @@ intent-classification-service/
 ├── scripts/
 │   ├── train.py                     # LSTM training
 │   ├── train_transformer.py         # Transformer training
-│   ├── train_bert.py               # BERT training
-│   └── test_model.py               # Model testing
+│   ├── train_bert.py                # BERT training
+│   └── test_model.py                # Model testing
 ├── data/
 │   └── atis/                        # ATIS dataset
 └── docs/
-    └── experiments.md          # Detailed experimental results
+    └── experiments.md               # Detailed experimental results
 ```
 
 ## 🤝 Contributing
