@@ -47,6 +47,10 @@ pip install -r requirements.txt
 
 ### Train Models
 ```bash
+# Train(from root directory)
+python scripts/train_[model].py
+
+
 # Train LSTM (fast, efficient)
 python scripts/train_lstm.py
 
@@ -67,7 +71,7 @@ output_models/
 ```
 ### Test Models
 ```bash
-# Test a model
+# Test a model (from root directory)
 python scripts/test_model.py --model output_models/[model]
 
 # Test LSTM 
