@@ -88,7 +88,7 @@ curl -X POST http://localhost:8080/intent \
   
 ```
 
-### Expected Resoinse 
+### Expected Response 
 ```bash
 
 {
