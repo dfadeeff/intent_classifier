@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
 ### Train Models
 ```bash
-# Train(from root directory)
+# Train (from root directory)
 python scripts/train_[model].py
 
 
