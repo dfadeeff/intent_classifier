@@ -1,23 +1,27 @@
 # Core ML and API dependencies
-torch>=1.9.0
+torch>=2.0.0
 transformers>=4.21.0
-scikit-learn>=1.0.0
+scikit-learn>=1.3.0
 numpy>=1.21.0
-pandas>=1.3.0
+pandas>=1.5.0
 
 # API and server
-flask>=2.0.0
-flask-swagger-ui>=4.0.0
+flask>=2.2.0
+flask-swagger-ui>=4.11.0
 
 # Data processing and visualization
-matplotlib>=3.5.0
-seaborn>=0.11.0
+matplotlib>=3.6.0
+seaborn>=0.12.0
 
 # Additional ML utilities
-nltk>=3.7
+nltk>=3.8
 regex>=2022.3.2
+
+# Testing
+pytest>=7.0.0
+requests>=2.28.0
 
 # Development and code quality
 black>=22.0.0
-flake8>=4.0.0
-isort>=5.10.0
+flake8>=6.0.0
+isort>=5.12.0
