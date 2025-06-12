@@ -76,7 +76,7 @@ python server.py --model output_models/lstm_model --port 8080
 ### Test API
 ```bash
 
-# Open a second terminal and test the model that you have specified in the first terminal above
+# Open a second terminal and test the model that you have specified in the first terminal 
 
 # Check service health
 curl http://localhost:8080/ready
