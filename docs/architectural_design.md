@@ -147,7 +147,7 @@ Models are auto-detected based on file structure:
 ```
 # BERT Model Structure
 model_dir/
-├── tokenizer/          # ← Indicates BERT
+├── tokenizer/         # ← Indicates BERT
 ├── model.pt           # ← Model weights
 └── label_encoder.pkl  # ← Label mapping
 
