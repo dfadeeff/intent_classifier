@@ -5,7 +5,7 @@ BERT model training script using existing modular components
 
 import os
 import sys
-
+import pickle
 import pandas as pd
 import torch
 from sklearn.model_selection import train_test_split
@@ -117,7 +117,6 @@ def main():
     bert_vocab.tokenizer.save_pretrained(os.path.join(output_dir, "tokenizer"))
 
     # Save label encoder (same as other models)
-    import pickle
 
     with open(os.path.join(output_dir, "label_encoder.pkl"), "wb") as f:
         pickle.dump(label_encoder, f)

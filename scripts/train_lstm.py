@@ -16,7 +16,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.data.dataset import IntentDataset, collate_fn
 
-# Fix imports - remove 'src.' prefix since we added the parent directory to path
+
 from src.data.preprocessing import build_vocab
 from src.models.lstm_model import LSTMClassifier
 from src.training.trainer import TextClassifierTrainer
