@@ -37,7 +37,7 @@ class ModelEvaluator:
             raise FileNotFoundError(f"Test file not found: {test_file}")
 
         data = pd.read_csv(test_file, sep="\t", header=None, names=["text", "intent"])
-        print(f"📊 Loaded {len(data)} test samples")
+        print(f"Loaded {len(data)} test samples")
 
         return data["text"].tolist(), data["intent"].tolist()
 
@@ -47,7 +47,7 @@ class ModelEvaluator:
         confidences = []
 
         if verbose:
-            print("🔮 Making predictions...")
+            print("Making predictions...")
 
         for i, text in enumerate(texts):
             if verbose and i % 100 == 0:
@@ -106,7 +106,7 @@ class ModelEvaluator:
     def print_summary(self):
         """Print evaluation summary"""
         if not self.results:
-            print("❌ No evaluation results available. Run evaluate() first.")
+            print("No evaluation results available. Run evaluate() first.")
             return
 
         metrics = self.results["basic_metrics"]
@@ -114,24 +114,24 @@ class ModelEvaluator:
         label_analysis = self.results["label_analysis"]
 
         print(
-            f"\n🎯 Test Accuracy: {metrics['accuracy']:.4f} ({metrics['accuracy'] * 100:.2f}%)"
+            f"\n Test Accuracy: {metrics['accuracy']:.4f} ({metrics['accuracy'] * 100:.2f}%)"
         )
 
         if metrics["avg_confidence"]:
             print(f"📊 Average Confidence: {metrics['avg_confidence']:.4f}")
 
-        print(f"✅ Correct: {metrics['correct_predictions']}/{metrics['total_samples']}")
-        print(f"❌ Misclassified: {len(misclassified)}/{metrics['total_samples']}")
+        print(f"Correct: {metrics['correct_predictions']}/{metrics['total_samples']}")
+        print(f"Misclassified: {len(misclassified)}/{metrics['total_samples']}")
 
-        print("\n📋 Classification Report:")
+        print("\n Classification Report:")
         print("=" * 80)
         print(self.results["classification_report"])
 
-        print(f"\n🔥 Top 10 Most Common Intents:")
+        print(f"\nTop 10 Most Common Intents:")
         for i, (intent, count) in enumerate(label_analysis["most_common_labels"], 1):
             print(f"{i:2d}. {intent}: {count} samples")
 
-        print(f"\n❌ Misclassified Examples (first 10):")
+        print(f"\nMisclassified Examples (first 10):")
         print("=" * 80)
         for i, error in enumerate(misclassified[:10]):
             print(f"{i + 1:2d}. Text: '{error['text']}'")
@@ -148,7 +148,7 @@ class ModelEvaluator:
     def save_results(self, output_file):
         """Save detailed results to file"""
         if not self.results:
-            print("❌ No evaluation results available. Run evaluate() first.")
+            print("No evaluation results available. Run evaluate() first.")
             return
 
         metrics = self.results["basic_metrics"]
@@ -186,4 +186,4 @@ class ModelEvaluator:
                     f.write(f" (conf: {error['confidence']:.3f})")
                 f.write("\n\n")
 
-        print(f"📄 Detailed results saved to: {output_file}")
+        print(f"Detailed results saved to: {output_file}")
