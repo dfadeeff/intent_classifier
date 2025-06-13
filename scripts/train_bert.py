@@ -42,17 +42,17 @@ class BERTIntentDataset(IntentDataset):
 
 
 def main():
-    print("🤖 Starting BERT training...")
+    print("Starting BERT training...")
 
     # Load data (same as other models)
     train_file = "../data/atis/train.tsv"
     if not os.path.exists(train_file):
-        print(f"❌ File not found: {train_file}")
+        print(f"File not found: {train_file}")
         print("Make sure you have data/atis/train.tsv")
         return
 
     data = pd.read_csv(train_file, sep="\t", header=None, names=["text", "intent"])
-    print(f"📊 Loaded {len(data)} samples with {data['intent'].nunique()} intents")
+    print(f"Loaded {len(data)} samples with {data['intent'].nunique()} intents")
 
     # Build BERT "vocab" (actually a tokenizer wrapper)
     bert_vocab = build_bert_vocab(data["text"].tolist())
@@ -62,8 +62,8 @@ def main():
     labels = label_encoder.fit_transform(data["intent"])
 
     # Print info
-    print(f"📚 Tokenizer: DistilBERT")
-    print(f"🏷️  Classes: {list(label_encoder.classes_)}")
+    print(f"Tokenizer: DistilBERT")
+    print(f"Classes: {list(label_encoder.classes_)}")
 
     # Split data (same as other models)
     X_train, X_val, y_train, y_val = train_test_split(
@@ -122,10 +122,10 @@ def main():
     with open(os.path.join(output_dir, "label_encoder.pkl"), "wb") as f:
         pickle.dump(label_encoder, f)
 
-    print(f"✅ BERT model saved to {output_dir}")
-    print(f"🎯 Best accuracy: {best_accuracy:.4f}")
+    print(f"BERT model saved to {output_dir}")
+    print(f"Best accuracy: {best_accuracy:.4f}")
 
-    print(f"\n📋 Next steps:")
+    print(f"\n Next steps:")
     print(f"1. python server.py --model {output_dir}")
     print("2. curl http://localhost:8080/ready")
     print(

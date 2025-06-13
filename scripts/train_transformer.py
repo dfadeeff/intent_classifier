@@ -94,7 +94,7 @@ def main():
     output_dir = "../output_models/transformer_model"
     trainer.save_model(output_dir, vocab, label_encoder)
 
-    print(f"\n📋 Next steps:")
+    print(f"\n Next steps:")
     print(f"1. python server.py --model {output_dir}")
     print("2. curl http://localhost:8080/ready")
     print(

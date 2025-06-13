@@ -245,7 +245,7 @@ def main():
         print(f"All results saved to: {results_dir}")
         print(f"Detailed report: {os.path.basename(args.output)}")
         if args.visualize:
-            print(f"   📊 Visualizations: plots/")
+            print(f"Visualizations: plots/")
 
         # Create a quick summary file as well
         summary_file = os.path.join(results_dir, "quick_summary.txt")

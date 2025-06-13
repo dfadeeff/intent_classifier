@@ -24,17 +24,17 @@ from src.training.utils import print_model_info
 
 
 def main():
-    print("🚀 Starting LSTM training...")
+    print("Starting LSTM training...")
 
     # Load data (fix path to work from scripts directory)
     train_file = "../data/atis/train.tsv"
     if not os.path.exists(train_file):
-        print(f"❌ File not found: {train_file}")
+        print(f"File not found: {train_file}")
         print("Make sure you have data/atis/train.tsv")
         return
 
     data = pd.read_csv(train_file, sep="\t", header=None, names=["text", "intent"])
-    print(f"📊 Loaded {len(data)} samples with {data['intent'].nunique()} intents")
+    print(f"Loaded {len(data)} samples with {data['intent'].nunique()} intents")
 
     # Build vocab
     vocab = build_vocab(data["text"].tolist())
@@ -44,8 +44,8 @@ def main():
     labels = label_encoder.fit_transform(data["intent"])
 
     # Print info (fix - pass a dummy model first)
-    print(f"📚 Vocabulary size: {len(vocab)}")
-    print(f"🏷️  Classes: {list(label_encoder.classes_)}")
+    print(f"Vocabulary size: {len(vocab)}")
+    print(f"Classes: {list(label_encoder.classes_)}")
 
     # Split data
     X_train, X_val, y_train, y_val = train_test_split(
@@ -88,7 +88,7 @@ def main():
     output_dir = "../output_models/lstm_model"
     trainer.save_model(output_dir, vocab, label_encoder)
 
-    print(f"\n📋 Next steps:")
+    print(f"\n Next steps:")
     print(f"1. python server.py --model {output_dir}")
     print("2. curl http://localhost:8080/ready")
     print(
