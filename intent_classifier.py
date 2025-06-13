@@ -39,7 +39,7 @@ class IntentClassifier:
         try:
             print(f"Loading model from {model_path}")
 
-            # NEW: Check if this is a BERT model (has tokenizer directory, no vocab.pkl)
+            # Check if this is a BERT model (has tokenizer directory, no vocab.pkl)
             has_tokenizer_dir = os.path.exists(os.path.join(model_path, "tokenizer"))
             has_vocab_pkl = os.path.exists(os.path.join(model_path, "vocab.pkl"))
 
