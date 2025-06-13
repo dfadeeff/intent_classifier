@@ -38,16 +38,16 @@ class TransformerClassifier(BaseTextClassifier):
     """Transformer-based text classifier"""
 
     def __init__(
-        self,
-        vocab_size,
-        num_classes,
-        embedding_dim=256,  # increased from 128
-        num_heads=8,
-        num_layers=6,  # increased from 4
-        dim_feedforward=1024,  # increased from 512
-        dropout=0.1,
-        max_len=512,
-        use_layer_norm=True,  # additional normalization
+            self,
+            vocab_size,
+            num_classes,
+            embedding_dim=256,  # increased from 128
+            num_heads=8,
+            num_layers=6,  # increased from 4
+            dim_feedforward=1024,  # increased from 512
+            dropout=0.1,
+            max_len=512,
+            use_layer_norm=True,  # additional normalization
     ):
         super(TransformerClassifier, self).__init__(vocab_size, num_classes)
 
@@ -89,11 +89,11 @@ class TransformerClassifier(BaseTextClassifier):
         self.classifier = nn.Sequential(
             nn.LayerNorm(embedding_dim),
             nn.Dropout(dropout),
-            # nn.Linear(embedding_dim, dim_feedforward // 2),
-            nn.Linear(embedding_dim, dim_feedforward),  # larger hidden layer
-            nn.GELU(),  # changed from ReLU()
+
+            nn.Linear(embedding_dim, dim_feedforward),
+            nn.GELU(),                                  # changed from ReLU()
             nn.Dropout(dropout),
-            # added two more steps
+
             nn.Linear(dim_feedforward, dim_feedforward // 2),
             nn.GELU(),
             nn.Linear(dim_feedforward // 2, num_classes),
@@ -106,8 +106,7 @@ class TransformerClassifier(BaseTextClassifier):
         """Initialize model weights"""
         for module in self.modules():
             if isinstance(module, nn.Linear):
-                # Use better initialization for deeper networks
-                # nn.init.xavier_uniform_(module.weight)
+
                 nn.init.xavier_normal_(module.weight, gain=1.0)
                 if module.bias is not None:
                     nn.init.constant_(module.bias, 0)

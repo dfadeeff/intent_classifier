@@ -56,7 +56,7 @@ class BERTClassifier(BaseTextClassifier):
             lengths: Not used for BERT, but kept for interface compatibility
         """
         # For BERT, we expect input_ids to be BERT token IDs with attention mask info
-        # We'll handle attention mask creation here
+        # Handle attention mask creation here
         attention_mask = (input_ids != 0).long()
 
         # Get BERT outputs

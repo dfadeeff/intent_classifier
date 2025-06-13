@@ -118,7 +118,7 @@ class ModelEvaluator:
         )
 
         if metrics["avg_confidence"]:
-            print(f"📊 Average Confidence: {metrics['avg_confidence']:.4f}")
+            print(f"Average Confidence: {metrics['avg_confidence']:.4f}")
 
         print(f"Correct: {metrics['correct_predictions']}/{metrics['total_samples']}")
         print(f"Misclassified: {len(misclassified)}/{metrics['total_samples']}")
