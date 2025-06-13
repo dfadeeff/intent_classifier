@@ -3,7 +3,7 @@
 Basic server unit tests
 """
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 import sys
 import os
 

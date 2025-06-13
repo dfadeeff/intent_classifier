@@ -4,7 +4,6 @@ Simple API tests - converted from simple_api_test_manual.py
 Very basic tests that are forgiving about implementation details
 """
 
-import json
 import pytest
 import requests
 from requests.exceptions import ConnectionError
