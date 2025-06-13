@@ -6,7 +6,6 @@ Metrics calculation for model evaluation
 from collections import Counter
 
 import numpy as np
-import pandas as pd
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 
@@ -82,11 +81,11 @@ def analyze_prediction_bias(true_counts, pred_counts):
                 "true_count": true_freq,
                 "pred_count": pred_freq,
                 "bias_ratio": bias_ratio,  # >1 = overpredicted, <1 = underpredicted
-                "bias_type": "overpredicted"
-                if bias_ratio > 1.2
-                else "underpredicted"
-                if bias_ratio < 0.8
-                else "balanced",
+                "bias_type": (
+                    "overpredicted"
+                    if bias_ratio > 1.2
+                    else "underpredicted" if bias_ratio < 0.8 else "balanced"
+                ),
             }
 
     return bias_analysis

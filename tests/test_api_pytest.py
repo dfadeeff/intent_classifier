@@ -26,7 +26,9 @@ def check_server_running():
 def ensure_server_running():
     """Ensure server is running before any tests run"""
     if not check_server_running():
-        pytest.skip(f"Server not running at {BASE_URL}. Start the server first with: python server.py")
+        pytest.skip(
+            f"Server not running at {BASE_URL}. Start the server first with: python server.py"
+        )
 
 
 class TestAPI:
@@ -98,7 +100,7 @@ class TestAPI:
         response = requests.post(
             f"{BASE_URL}/intent",
             data="not json",
-            headers={"Content-Type": "text/plain"}
+            headers={"Content-Type": "text/plain"},
         )
 
         assert response.status_code == 400

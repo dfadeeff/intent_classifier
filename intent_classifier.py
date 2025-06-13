@@ -12,8 +12,8 @@ class IntentClassifier:
         self.model = None
         self.vocab = None
         self.label_encoder = None
-        self.tokenizer = None  # NEW: For BERT models
-        self.model_type = None  # NEW: Track model type
+        self.tokenizer = None  # For BERT models
+        self.model_type = None  # Track model type
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.ready = False
 
@@ -91,7 +91,7 @@ class IntentClassifier:
         self.model.eval()
 
     def _load_lstm_transformer_model(self, model_path):
-        """Load LSTM/Transformer model (your original code)"""
+        """Load LSTM/Transformer model"""
         # Load vocab
         with open(os.path.join(model_path, "vocab.pkl"), "rb") as f:
             self.vocab = pickle.load(f)
@@ -165,7 +165,7 @@ class IntentClassifier:
                 logits = self.model(input_ids)
                 probs = torch.softmax(logits, dim=1)[0]
             else:
-                # LSTM/Transformer prediction (your original code)
+                # LSTM/Transformer prediction
                 indices = self.text_to_indices(text)
                 input_ids = torch.tensor([indices], dtype=torch.long).to(self.device)
                 logits = self.model(input_ids)

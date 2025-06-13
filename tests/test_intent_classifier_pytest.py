@@ -48,11 +48,7 @@ class TestIntentClassifier:
         classifier = IntentClassifier()
 
         # Mock vocab
-        classifier.vocab = {
-            "hello": 1,
-            "world": 2,
-            "<UNK>": 0
-        }
+        classifier.vocab = {"hello": 1, "world": 2, "<UNK>": 0}
 
         # Test basic conversion
         indices = classifier.text_to_indices("hello world")
@@ -99,22 +95,22 @@ class TestIntentClassifier:
         with pytest.raises(Exception):
             classifier.load("/nonexistent/path")
 
-    @patch('os.path.exists')
+    @patch("os.path.exists")
     def test_model_type_detection_lstm(self, mock_exists):
         """Test LSTM model detection"""
         classifier = IntentClassifier()
 
         # Mock file system for LSTM model
         def mock_exists_side_effect(path):
-            if 'tokenizer' in path:
+            if "tokenizer" in path:
                 return False  # No tokenizer = LSTM
-            if 'vocab.pkl' in path:
-                return True   # Has vocab = LSTM
+            if "vocab.pkl" in path:
+                return True  # Has vocab = LSTM
             return True
 
         mock_exists.side_effect = mock_exists_side_effect
 
-        with patch.object(classifier, '_load_lstm_transformer_model') as mock_load:
+        with patch.object(classifier, "_load_lstm_transformer_model") as mock_load:
             mock_load.side_effect = Exception("Expected test error")
 
             try:
@@ -126,22 +122,22 @@ class TestIntentClassifier:
             assert classifier.model_type == "lstm_transformer"
             mock_load.assert_called_once()
 
-    @patch('os.path.exists')
+    @patch("os.path.exists")
     def test_model_type_detection_bert(self, mock_exists):
         """Test BERT model detection"""
         classifier = IntentClassifier()
 
         # Mock file system for BERT model
         def mock_exists_side_effect(path):
-            if 'tokenizer' in path:
-                return True   # Has tokenizer = BERT
-            if 'vocab.pkl' in path:
+            if "tokenizer" in path:
+                return True  # Has tokenizer = BERT
+            if "vocab.pkl" in path:
                 return False  # No vocab = BERT
             return True
 
         mock_exists.side_effect = mock_exists_side_effect
 
-        with patch.object(classifier, '_load_bert_model') as mock_load:
+        with patch.object(classifier, "_load_bert_model") as mock_load:
             mock_load.side_effect = Exception("Expected test error")
 
             try:
@@ -207,7 +203,7 @@ class TestIntentClassifierIntegration:
                 pickle.dump({"test": 1}, f)
 
             # Should detect as LSTM model
-            with patch.object(classifier, '_load_lstm_transformer_model') as mock_load:
+            with patch.object(classifier, "_load_lstm_transformer_model") as mock_load:
                 mock_load.side_effect = Exception("Expected test error")
 
                 try:

@@ -2,10 +2,8 @@
 
 import argparse
 import os
-
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, Response
 from flask_swagger_ui import get_swaggerui_blueprint
-
 from intent_classifier import IntentClassifier
 
 # Global model instance
@@ -38,9 +36,6 @@ def ready():
 @app.route("/intent", methods=["POST"])
 def intent():
     """Intent classification endpoint"""
-    import json
-
-    from flask import Response
 
     try:
         # Validate request content type
@@ -138,7 +133,7 @@ def main():
     )
     args = arg_parser.parse_args()
 
-    # FIX THE BUG: Load model BEFORE starting server
+    # FIX THE ORIGINAL BUG: Load model BEFORE starting server
     print(f"Loading model from: {args.model}")
     try:
         model.load(args.model)
