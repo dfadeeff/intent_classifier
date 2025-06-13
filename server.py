@@ -2,8 +2,10 @@
 
 import argparse
 import os
-from flask import Flask, jsonify, request, send_from_directory, Response
+
+from flask import Flask, Response, jsonify, request, send_from_directory
 from flask_swagger_ui import get_swaggerui_blueprint
+
 from intent_classifier import IntentClassifier
 
 # Global model instance

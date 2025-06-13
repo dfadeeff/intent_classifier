@@ -3,12 +3,13 @@
 Tests for IntentClassifier class
 """
 
-import pytest
-import tempfile
 import os
 import pickle
 import sys
+import tempfile
 from unittest.mock import Mock, patch
+
+import pytest
 import torch
 
 # Add the parent directory to the Python path so we can import intent_classifier

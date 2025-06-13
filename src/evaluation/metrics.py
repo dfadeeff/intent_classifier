@@ -6,7 +6,8 @@ Metrics calculation for model evaluation
 from collections import Counter
 
 import numpy as np
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import (accuracy_score, classification_report,
+                             confusion_matrix)
 
 
 def calculate_basic_metrics(true_labels, predictions, confidences=None):

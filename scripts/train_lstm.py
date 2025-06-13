@@ -15,8 +15,6 @@ from torch.utils.data import DataLoader
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.data.dataset import IntentDataset, collate_fn
-
-
 from src.data.preprocessing import build_vocab
 from src.models.lstm_model import LSTMClassifier
 from src.training.trainer import TextClassifierTrainer

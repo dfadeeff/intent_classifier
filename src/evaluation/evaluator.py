@@ -7,14 +7,10 @@ import os
 
 import pandas as pd
 
-from .metrics import (
-    analyze_label_distribution,
-    calculate_basic_metrics,
-    calculate_per_class_metrics,
-    find_misclassified_examples,
-    generate_classification_report,
-    get_confusion_matrix_data,
-)
+from .metrics import (analyze_label_distribution, calculate_basic_metrics,
+                      calculate_per_class_metrics, find_misclassified_examples,
+                      generate_classification_report,
+                      get_confusion_matrix_data)
 
 
 class ModelEvaluator:

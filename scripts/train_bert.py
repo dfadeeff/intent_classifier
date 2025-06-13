@@ -4,8 +4,9 @@ BERT model training script using existing modular components
 """
 
 import os
-import sys
 import pickle
+import sys
+
 import pandas as pd
 import torch
 from sklearn.model_selection import train_test_split
@@ -16,9 +17,9 @@ from torch.utils.data import DataLoader
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.data.dataset import IntentDataset, collate_fn
-
 # Reuse existing modular components!
-from src.data.preprocessing import build_bert_vocab, clean_text, text_to_bert_indices
+from src.data.preprocessing import (build_bert_vocab, clean_text,
+                                    text_to_bert_indices)
 from src.models.bert_model import BERTClassifier
 from src.training.trainer import TextClassifierTrainer
 from src.training.utils import print_model_info
