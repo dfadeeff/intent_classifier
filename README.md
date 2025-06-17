@@ -294,7 +294,7 @@ python scripts/test_model.py --model output_models/bert_model
 ## 📁 Project Structure
 
 ```
-intent-classification-service/
+intent-classifier/
 ├── README.md                        # This file
 ├── requirements.txt                 # Python dependencies
 ├── server.py                        # HTTP API service
