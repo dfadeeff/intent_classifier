@@ -315,7 +315,7 @@ intent-classifier/
 │       ├── evaluator.py             # Model evaluation
 │       └── visualizer.py            # Performance visualization
 ├── scripts/
-│   ├── train.py                     # LSTM training
+│   ├── train_lstm.py                # LSTM training
 │   ├── train_transformer.py         # Transformer training
 │   ├── train_bert.py                # BERT training
 │   └── test_model.py                # Model testing
